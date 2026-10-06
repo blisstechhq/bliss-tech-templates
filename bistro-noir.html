@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bistro Noir — Fine Dining, Central Hong Kong</title>
+<meta name="description" content="Bistro Noir — a one-Michelin-star fine dining room in Central, Hong Kong. Seasonal French cuisine, a 400-label cellar and intimate chef's counter. Reserve your table.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2000&q=80&auto=format&fit=crop">
+<style>
+/* ============================================================
+   BISTRO NOIR — dark fine-dining template
+   Single file · inline CSS/JS · Google Fonts + Unsplash only
+   ============================================================ */
+
+/* ---------- 1. RESET & TOKENS ---------- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08090a;
+  --bg-2:#0c0e10;
+  --panel:#111316;
+  --panel-2:#15181c;
+  --line:rgba(201,169,110,.16);
+  --line-soft:rgba(255,255,255,.07);
+  --gold:#c9a96e;
+  --gold-lt:#e3cd9d;
+  --gold-dk:#8a7040;
+  --cream:#f4f0e9;
+  --muted:#9c968c;
+  --muted-2:#6f6a63;
+  --shadow:0 30px 80px rgba(0,0,0,.65);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --maxw:1240px;
+  --nav-h:76px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--cream);
+  line-height:1.7;
+  font-weight:300;
+  overflow-x:hidden;
+  letter-spacing:.01em;
+}
+/* film grain */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit;background:none;border:none;outline:none}
+button{cursor:pointer}
+::selection{background:var(--gold);color:#000}
+:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+
+.serif{font-family:'Playfair Display',Georgia,serif}
+.script{font-family:'Cormorant Garamond',Georgia,serif}
+
+/* ---------- 2. SHARED PRIMITIVES ---------- */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:2rem}
+.eyebrow{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;
+  letter-spacing:.22em;color:var(--gold);text-transform:uppercase;
+  display:flex;align-items:center;gap:.9rem;
+}
+.eyebrow::before{content:'';width:34px;height:1px;background:var(--gold);opacity:.55;flex:none}
+.eyebrow.center{justify-content:center}
+.eyebrow.center::after{content:'';width:34px;height:1px;background:var(--gold);opacity:.55;flex:none}
+h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.14;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.4vw,3.4rem)}
+h3{font-size:clamp(1.25rem,2vw,1.6rem)}
+.lede{color:var(--muted);font-size:1.02rem;font-weight:300;max-width:56ch}
+.sec{padding:clamp(5rem,10vw,8.5rem) 0;position:relative;scroll-margin-top:var(--nav-h)}
+.sec-head{margin-bottom:clamp(2.5rem,5vw,4rem);max-width:760px}
+.sec-head .eyebrow{margin-bottom:1.1rem}
+.sec-head p{margin-top:1.2rem;color:var(--muted)}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);border:0}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:1rem 2.3rem;border:1px solid var(--gold);color:var(--gold);
+  font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+  position:relative;overflow:hidden;transition:color .5s var(--ease),border-color .5s var(--ease);
+}
+.btn span{position:relative;z-index:2}
+.btn::before{
+  content:'';position:absolute;inset:0;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease);z-index:1;
+}
+.btn:hover{color:#08090a;border-color:var(--gold-lt)}
+.btn:hover::before{transform:scaleX(1)}
+.btn--solid{background:var(--gold);color:#08090a;border-color:var(--gold)}
+.btn--solid::before{background:var(--cream)}
+.btn--solid:hover{color:#08090a;border-color:var(--cream)}
+.btn--ghost{border-color:var(--line-soft);color:var(--cream)}
+.btn--ghost::before{background:var(--cream)}
+.btn--ghost:hover{color:#08090a;border-color:var(--cream)}
+
+/* reveal */
+html.js [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+html.js [data-reveal].in{opacity:1;transform:none}
+
+/* ---------- 3. PROGRESS + SKIP ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold-dk),var(--gold-lt));z-index:10000;transition:width .1s linear}
+.skip{position:absolute;left:-9999px;top:0;background:var(--gold);color:#000;padding:.8rem 1.2rem;z-index:10001;font-size:.8rem}
+.skip:focus{left:1rem;top:1rem}
+
+/* ---------- 4. NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:900;
+  display:flex;align-items:center;
+  border-bottom:1px solid transparent;
+  transition:background .5s var(--ease),border-color .5s var(--ease),height .4s var(--ease),backdrop-filter .5s;
+}
+.nav.scrolled{background:rgba(8,9,10,.86);backdrop-filter:blur(18px) saturate(140%);border-bottom-color:var(--line-soft);height:64px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.brand{display:flex;flex-direction:column;line-height:1;flex:none}
+.brand b{font-family:'Playfair Display',serif;font-size:1.18rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.brand b em{font-style:normal;color:var(--gold)}
+.brand i{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.62rem;letter-spacing:.42em;color:var(--muted-2);margin-top:.3rem;text-transform:uppercase}
+.navlinks{display:flex;align-items:center;gap:2.1rem;list-style:none}
+.navlinks a{
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  position:relative;padding:.4rem 0;transition:color .35s;
+}
+.navlinks a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .45s var(--ease)}
+.navlinks a:hover{color:var(--gold-lt)}
+.navlinks a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:1.1rem}
+.nav-cta{padding:.72rem 1.5rem;font-size:.66rem}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line-soft);align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.burger i{display:block;width:17px;height:1px;background:var(--cream);transition:transform .4s var(--ease),opacity .3s}
+.burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] i:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ---------- 5. HERO ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;isolation:isolate}
+.hero-media{position:absolute;inset:0;z-index:-2}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 55%;transform:scale(1.06);animation:hz 22s var(--ease) forwards}
+@keyframes hz{to{transform:scale(1)}}
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 42%,rgba(0,0,0,.30),transparent 70%),
+    linear-gradient(to bottom,rgba(8,9,10,.92) 0%,rgba(8,9,10,.55) 28%,rgba(8,9,10,.62) 62%,rgba(8,9,10,.97) 100%);
+}
+.hero-in{position:relative;z-index:2;padding:calc(var(--nav-h) + 3rem) 2rem 6rem;max-width:940px}
+.hero .eyebrow{
+  margin:0 auto 2rem;font-size:1rem;letter-spacing:.2em;max-width:none;
+  justify-content:center;color:var(--gold-lt);flex-wrap:wrap;row-gap:.5rem
+}
+.hero .eyebrow::before,.hero .eyebrow::after{content:'';width:44px;height:1px;background:var(--gold);opacity:.6;flex:none}
+.hero h1{
+  font-size:clamp(3rem,11vw,7.6rem);line-height:.94;letter-spacing:.005em;font-weight:400;
+  text-shadow:0 22px 60px rgba(0,0,0,.6);
+}
+.hero h1 em{font-style:italic;color:var(--gold-lt);display:block}
+.orn{display:flex;align-items:center;justify-content:center;gap:1rem;margin:2.1rem 0 1.7rem}
+.orn span{width:min(120px,18vw);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+.orn i{color:var(--gold);font-size:.85rem;font-style:normal;letter-spacing:.3em}
+.hero .hero-sub{color:#cfc9c0;font-size:clamp(.95rem,1.5vw,1.1rem);max-width:52ch;margin:0 auto 2.6rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.hero-meta{
+  position:absolute;bottom:0;left:0;right:0;z-index:3;
+  border-top:1px solid var(--line-soft);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:rgba(8,9,10,.35);backdrop-filter:blur(6px);
+}
+.hero-meta div{padding:1.15rem 1rem;text-align:center;border-right:1px solid var(--line-soft)}
+.hero-meta div:last-child{border-right:0}
+.hero-meta dt{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2)}
+.hero-meta dd{font-family:'Cormorant Garamond',serif;font-size:1.02rem;color:var(--gold-lt);margin-top:.25rem;font-style:italic}
+.scroll-cue{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--muted-2)}
+.scroll-cue i{display:block;width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--gold));animation:cue 2.4s infinite}
+@keyframes cue{0%{transform:scaleY(.2);opacity:0}50%{opacity:1}100%{transform:scaleY(1);opacity:0}}
+.scroll-cue b{font-size:.55rem;letter-spacing:.32em;text-transform:uppercase;font-weight:400}
+
+/* ---------- 6. AWARD MARQUEE ---------- */
+.marquee{border-block:1px solid var(--line-soft);background:var(--bg-2);overflow:hidden;padding:1.05rem 0;position:relative}
+.marquee::before,.marquee::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--bg-2),transparent)}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--bg-2),transparent)}
+.marquee-track{display:flex;width:max-content;animation:slide 42s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-row{display:flex;align-items:center;gap:3.4rem;padding-right:3.4rem}
+.marquee-row b{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap}
+.marquee-row b em{font-style:normal;color:var(--gold)}
+.marquee-row s{width:4px;height:4px;background:var(--gold);opacity:.55;transform:rotate(45deg);text-decoration:none;flex:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- 7. STORY ---------- */
+.story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2.5rem,6vw,6rem);align-items:center}
+.story-copy p+p{margin-top:1.3rem}
+.story-copy h2{margin:1.1rem 0 1.6rem}
+.sig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.9rem;color:var(--gold);margin-top:2.2rem;letter-spacing:.02em}
+.sig span{display:block;font-size:.62rem;font-family:'Inter',sans-serif;font-style:normal;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);margin-top:.4rem}
+.story-media{position:relative}
+.story-media .m-main{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.88) contrast(1.05)}
+.story-media .m-float{
+  position:absolute;right:-2rem;bottom:-2.6rem;width:52%;aspect-ratio:1/1;object-fit:cover;
+  border:8px solid var(--bg);box-shadow:var(--shadow);filter:saturate(.88)
+}
+.story-badge{
+  position:absolute;top:-1.4rem;left:-1.4rem;background:var(--bg);border:1px solid var(--line);
+  padding:1.1rem 1.3rem;text-align:center;box-shadow:var(--shadow)
+}
+.story-badge b{display:block;font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold)}
+.story-badge s{display:block;font-size:.55rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);text-decoration:none;margin-top:.2rem}
+
+/* ---------- 8. CHEF ---------- */
+.chef{background:var(--bg-2);border-block:1px solid var(--line-soft)}
+.chef-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2.5rem,6vw,5.5rem);align-items:start}
+.chef-portrait{position:relative}
+.chef-portrait img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 22%;filter:grayscale(.22) contrast(1.06) brightness(.94);transition:filter 1s var(--ease)}
+.chef-portrait:hover img{filter:grayscale(0) contrast(1.04) brightness(1)}
+.chef-portrait::after{content:'';position:absolute;inset:0;border:1px solid var(--line);pointer-events:none}
+.chef-tag{
+  position:absolute;bottom:-1.5rem;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#08090a;padding:.6rem 1.4rem;white-space:nowrap;
+  font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;font-weight:500
+}
+.chef-copy h2{margin:1.1rem 0 1.4rem}
+.chef-quote{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.35rem,2.4vw,1.85rem);font-style:italic;
+  line-height:1.5;color:var(--cream);border-left:2px solid var(--gold);padding-left:1.6rem;margin:2.2rem 0
+}
+.chef-quote footer{font-family:'Inter',sans-serif;font-style:normal;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);margin-top:1rem}
+.chef-bio p+p{margin-top:1.15rem}
+.credentials{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);margin-top:2.4rem;border:1px solid var(--line-soft)}
+.credentials div{background:var(--bg-2);padding:1.35rem 1.5rem}
+.credentials b{display:block;font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--gold);line-height:1}
+.credentials s{display:block;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2);text-decoration:none;margin-top:.5rem}
+.chef-strip{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.4rem}
+.chef-strip img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:saturate(.9) brightness(.9)}
+
+/* ---------- 9. MENU ---------- */
+.tabs{display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;margin-bottom:3.2rem}
+.tab{
+  padding:.85rem 1.9rem;border:1px solid var(--line-soft);color:var(--muted);
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;transition:all .45s var(--ease)
+}
+.tab:hover{border-color:var(--line);color:var(--gold-lt)}
+.tab[aria-selected="true"]{background:var(--gold);border-color:var(--gold);color:#08090a;font-weight:500}
+.panel{display:none}
+.panel.on{display:block;animation:fade .6s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.dishes{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem}
+.dish{background:var(--panel);border:1px solid var(--line-soft);overflow:hidden;position:relative;transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.dish:hover{border-color:var(--line);transform:translateY(-5px)}
+.dish-img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.dish-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.92);transition:transform 1.1s var(--ease),filter .6s}
+.dish:hover .dish-img img{transform:scale(1.06);filter:brightness(1) saturate(1)}
+.dish-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,9,10,.75),transparent 55%)}
+.dish-body{padding:1.5rem 1.6rem 1.7rem}
+.dish-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.dish h3{font-size:1.16rem}
+.dish-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);white-space:nowrap}
+.dish p{font-size:.84rem;color:var(--muted);margin-top:.6rem;line-height:1.65}
+.dish-tag{
+  position:absolute;top:1rem;left:1rem;z-index:2;background:rgba(8,9,10,.78);backdrop-filter:blur(6px);
+  border:1px solid var(--line);color:var(--gold-lt);font-size:.55rem;letter-spacing:.24em;
+  text-transform:uppercase;padding:.35rem .75rem
+}
+.menu-note{
+  margin-top:3.2rem;border:1px solid var(--line);background:linear-gradient(135deg,rgba(201,169,110,.07),transparent 60%);
+  padding:clamp(1.8rem,4vw,2.8rem);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center
+}
+.menu-note h3{margin-bottom:.7rem}
+.menu-note p{color:var(--muted);font-size:.9rem;max-width:62ch}
+.menu-note b{color:var(--gold-lt);font-weight:500}
+.menu-foot{margin-top:1.8rem;font-size:.72rem;color:var(--muted-2);text-align:center;letter-spacing:.06em}
+
+/* ---------- 10. WINE ---------- */
+.wine{background:var(--bg-2);border-block:1px solid var(--line-soft);position:relative;overflow:hidden}
+.wine-bg{position:absolute;inset:0;z-index:0;opacity:.2}
+.wine-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.4) brightness(.6)}
+.wine::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,var(--bg-2) 0%,rgba(12,14,16,.93) 40%,var(--bg-2) 100%)}
+.wine .wrap{position:relative;z-index:2}
+.wine-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+.winelist{border-top:1px solid var(--line-soft)}
+.winerow{
+  display:grid;grid-template-columns:74px 1fr auto;gap:1.6rem;align-items:baseline;
+  padding:1.5rem .4rem;border-bottom:1px solid var(--line-soft);transition:background .4s var(--ease),padding-left .4s var(--ease)
+}
+.winerow:hover{background:rgba(201,169,110,.045);padding-left:1rem}
+.vintage{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);font-style:italic}
+.wine-name{font-family:'Playfair Display',serif;font-size:1.08rem;line-height:1.35}
+.wine-region{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-top:.35rem}
+.wine-pair{font-size:.8rem;color:var(--muted);margin-top:.55rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.96rem}
+.wine-pair em{color:var(--gold-lt);font-style:normal}
+.wine-price{text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream);white-space:nowrap}
+.wine-price span{display:block;font-family:'Inter',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);margin-top:.3rem}
+.paircards{display:flex;flex-direction:column;gap:1rem}
+.paircard{position:relative;border:1px solid var(--line-soft);overflow:hidden;background:var(--panel);transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.paircard:hover{border-color:var(--line);transform:translateY(-4px)}
+.paircard img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:brightness(.7) saturate(.9)}
+.paircard-body{padding:1.3rem 1.4rem;position:relative;margin-top:-3.2rem;z-index:2;background:linear-gradient(to top,var(--panel) 78%,transparent)}
+.paircard h4{font-size:1rem;font-family:'Playfair Display',serif;color:var(--gold-lt)}
+.paircard p{font-size:.78rem;color:var(--muted);margin:.45rem 0 .8rem;line-height:1.6}
+.paircard b{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream)}
+.somm{
+  margin-top:2.2rem;border-left:2px solid var(--gold);padding:1.3rem 0 1.3rem 1.5rem;
+  background:linear-gradient(90deg,rgba(201,169,110,.06),transparent)
+}
+.somm p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.12rem;color:var(--cream)}
+.somm cite{display:block;font-style:normal;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);margin-top:.9rem}
+
+/* ---------- 11. GALLERY ---------- */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:.7rem}
+.g-item{position:relative;overflow:hidden;cursor:pointer;background:var(--panel);border:0;padding:0;display:block;width:100%;height:100%}
+.g-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.76) saturate(.9);transition:transform 1.2s var(--ease),filter .7s var(--ease)}
+.g-item:hover img{transform:scale(1.07);filter:brightness(1) saturate(1)}
+.g-item::after{
+  content:'';position:absolute;inset:0;border:1px solid var(--gold);opacity:0;transition:opacity .45s var(--ease)
+}
+.g-item:hover::after{opacity:.85}
+.g-cap{
+  position:absolute;left:1rem;bottom:.9rem;right:1rem;text-align:left;z-index:2;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);
+  transform:translateY(8px);opacity:0;transition:all .5s var(--ease);text-shadow:0 2px 12px #000
+}
+.g-item:hover .g-cap{transform:none;opacity:1}
+.g-item::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 60%);opacity:0;transition:opacity .45s}
+.g-item:hover::before{opacity:1}
+.g-a{grid-column:span 2;grid-row:span 2}
+.g-b{grid-row:span 2}
+.g-c{grid-column:span 2}
+.g-d{grid-column:span 2}
+.g-e{grid-column:span 2}
+.gal-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:1.6rem;flex-wrap:wrap}
+.gal-foot p{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+
+/* ---------- 12. LIGHTBOX ---------- */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(5,6,7,.96);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem)}
+.lb.open{display:flex;animation:fade .35s var(--ease)}
+.lb figure{max-width:1180px;width:100%;text-align:center}
+.lb img{width:100%;max-height:76vh;object-fit:contain;box-shadow:var(--shadow)}
+.lb figcaption{margin-top:1.3rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream)}
+.lb figcaption span{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2);margin-top:.6rem}
+.lb-btn{position:absolute;width:52px;height:52px;border:1px solid var(--line);color:var(--cream);display:grid;place-items:center;transition:all .4s var(--ease);background:rgba(8,9,10,.5)}
+.lb-btn:hover{background:var(--gold);color:#08090a;border-color:var(--gold)}
+.lb-prev{left:clamp(.5rem,2vw,2rem);top:50%;transform:translateY(-50%)}
+.lb-next{right:clamp(.5rem,2vw,2rem);top:50%;transform:translateY(-50%)}
+.lb-close{top:clamp(.5rem,2vw,1.6rem);right:clamp(.5rem,2vw,1.6rem);width:44px;height:44px}
+
+/* ---------- 13. RESERVATION ---------- */
+.reserve{position:relative;overflow:hidden}
+.reserve-bg{position:absolute;inset:0;z-index:0}
+.reserve-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) brightness(.34)}
+.reserve::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,rgba(8,9,10,.86) 30%,rgba(8,9,10,.92) 70%,var(--bg) 100%)}
+.reserve .wrap{position:relative;z-index:2}
+.res-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+.form-card{background:rgba(17,19,22,.82);backdrop-filter:blur(14px);border:1px solid var(--line);padding:clamp(1.9rem,4vw,3rem)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem}
+.f-row.one{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:.5rem;position:relative}
+.field label{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.field label i{font-style:normal;color:var(--gold)}
+.field input,.field select,.field textarea{
+  background:rgba(255,255,255,.028);border:1px solid var(--line-soft);padding:.92rem 1rem;
+  font-size:.88rem;color:var(--cream);font-weight:300;transition:border-color .4s,background .4s;width:100%
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:rgba(201,169,110,.045)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' fill='none' stroke='%23c9a96e' stroke-width='1.4'%3E%3Cpath d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.4rem}
+.field select option{background:#111316;color:var(--cream)}
+.field textarea{resize:vertical;min-height:104px;font-family:inherit}
+.field.err input,.field.err select,.field.err textarea{border-color:#b4534a;background:rgba(180,83,74,.06)}
+.msg{font-size:.68rem;color:#d98a80;letter-spacing:.04em;min-height:0;display:none}
+.field.err .msg{display:block}
+.radios{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.2rem}
+.radio{position:relative;cursor:pointer}
+.radio input{position:absolute;opacity:0;inset:0;cursor:pointer;width:100%;height:100%}
+.radio span{
+  display:block;text-align:center;padding:.85rem .5rem;border:1px solid var(--line-soft);
+  font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:all .4s var(--ease)
+}
+.radio input:checked+span{border-color:var(--gold);color:var(--gold-lt);background:rgba(201,169,110,.09)}
+.radio input:focus-visible+span{outline:1px solid var(--gold);outline-offset:2px}
+.check{display:flex;gap:.8rem;align-items:flex-start;margin:1.6rem 0;cursor:pointer;font-size:.76rem;color:var(--muted);line-height:1.6}
+.check input{appearance:none;width:17px;height:17px;border:1px solid var(--line);flex:none;margin-top:.2rem;transition:all .3s;position:relative;cursor:pointer}
+.check input:checked{background:var(--gold);border-color:var(--gold)}
+.check input:checked::after{content:'';position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid #08090a;border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.form-note{font-size:.68rem;color:var(--muted-2);margin-top:1rem;line-height:1.7}
+.booked{display:none;text-align:center;padding:2rem 1rem}
+.booked.on{display:block;animation:fade .6s var(--ease)}
+.booked .tick{width:66px;height:66px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;margin:0 auto 1.6rem;color:var(--gold);font-size:1.5rem}
+.booked h3{margin-bottom:.8rem}
+.booked p{color:var(--muted);font-size:.88rem}
+.ref{
+  margin:1.8rem auto 0;display:inline-block;border:1px dashed var(--line);padding:.9rem 1.6rem;
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold-lt);letter-spacing:.08em
+}
+.booked-detail{margin-top:1.6rem;display:grid;grid-template-columns:1fr 1fr;gap:.9rem;text-align:left}
+.booked-detail div{border:1px solid var(--line-soft);padding:.9rem 1.1rem}
+.booked-detail s{display:block;font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);text-decoration:none}
+.booked-detail b{display:block;font-weight:400;font-size:.9rem;margin-top:.35rem;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream)}
+.info-card{border:1px solid var(--line-soft);padding:clamp(1.6rem,3vw,2.2rem);background:rgba(12,14,16,.6);backdrop-filter:blur(10px)}
+.info-card h3{margin-bottom:1.4rem;font-size:1.2rem}
+.info-list{list-style:none;display:flex;flex-direction:column;gap:1.25rem}
+.info-list li{display:flex;gap:1rem;align-items:flex-start}
+.info-list svg{flex:none;margin-top:.28rem;stroke:var(--gold);fill:none;stroke-width:1.3}
+.info-list b{display:block;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:400;margin-bottom:.3rem}
+.info-list p{font-size:.86rem;color:var(--cream);line-height:1.65}
+.info-list p em{font-style:normal;color:var(--muted)}
+.info-foot{margin-top:1.9rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.info-foot p{font-size:.76rem;color:var(--muted);line-height:1.75}
+.info-foot b{color:var(--gold-lt);font-weight:500}
+
+/* ---------- 14. FOOTER ---------- */
+footer.site{border-top:1px solid var(--line-soft);background:var(--bg-2);padding:clamp(3.5rem,7vw,5.5rem) 0 0}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:2.5rem;padding-bottom:3.5rem}
+.f-brand b{font-family:'Playfair Display',serif;font-size:1.25rem;letter-spacing:.16em;text-transform:uppercase;display:block}
+.f-brand b em{font-style:normal;color:var(--gold)}
+.f-brand p{font-size:.82rem;color:var(--muted);margin-top:1.1rem;max-width:34ch;line-height:1.75}
+.socials{display:flex;gap:.6rem;margin-top:1.5rem}
+.socials a{width:38px;height:38px;border:1px solid var(--line-soft);display:grid;place-items:center;transition:all .4s var(--ease)}
+.socials a:hover{border-color:var(--gold);background:var(--gold);color:#08090a}
+.socials svg{stroke:currentColor;fill:none;stroke-width:1.3}
+.f-col h4{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;font-weight:500;margin-bottom:1.3rem}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.f-col a,.f-col span{font-size:.82rem;color:var(--muted);transition:color .35s}
+.f-col a:hover{color:var(--gold-lt)}
+.f-hours{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:var(--muted)}
+.f-hours b{color:var(--cream);font-weight:400}
+.f-bottom{border-top:1px solid var(--line-soft);padding:1.6rem 0;display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.f-bottom p{font-size:.7rem;color:var(--muted-2);letter-spacing:.05em}
+.f-bottom p a{color:var(--gold);transition:color .3s}
+.f-bottom p a:hover{color:var(--gold-lt)}
+
+/* ---------- 15. TO TOP ---------- */
+.totop{
+  position:fixed;right:1.6rem;bottom:1.6rem;z-index:800;width:46px;height:46px;
+  border:1px solid var(--line);background:rgba(8,9,10,.8);backdrop-filter:blur(10px);color:var(--gold);
+  display:grid;place-items:center;opacity:0;pointer-events:none;transition:all .5s var(--ease)
+}
+.totop.on{opacity:1;pointer-events:auto}
+.totop:hover{background:var(--gold);color:#08090a;border-color:var(--gold)}
+
+/* ---------- 16. RESPONSIVE ---------- */
+@media(max-width:1080px){
+  .story-grid,.chef-grid,.wine-grid,.res-grid{grid-template-columns:1fr}
+  .story-media .m-float{right:0;bottom:-2rem}
+  .chef-portrait{max-width:520px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:2.5rem 2rem}
+  .gal{grid-template-columns:repeat(3,1fr)}
+  .g-item{grid-column:span 1;grid-row:span 1}
+  .g-a{grid-column:span 2;grid-row:span 2}
+}
+@media(max-width:860px){
+  :root{--nav-h:66px}
+  .wrap{padding-inline:1.35rem}
+  .navlinks{
+    position:fixed;inset:var(--nav-h) 0 auto 0;flex-direction:column;gap:0;
+    background:rgba(8,9,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);
+    padding:1rem 1.35rem 1.6rem;
+    transform:translateY(-130%);transition:transform .55s var(--ease);align-items:stretch
+  }
+  .navlinks.open{transform:none}
+  .navlinks a{display:block;padding:1.05rem 0;border-bottom:1px solid var(--line-soft);font-size:.78rem}
+  .navlinks a::after{display:none}
+  .burger{display:flex}
+  .nav-cta{display:none}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .hero-meta div:nth-child(2){border-right:0}
+  .hero-meta div:nth-child(1),.hero-meta div:nth-child(2){border-bottom:1px solid var(--line-soft)}
+  .scroll-cue{display:none}
+  .menu-note{grid-template-columns:1fr}
+  .f-row,.radios,.booked-detail{grid-template-columns:1fr}
+  .winerow{grid-template-columns:1fr auto;gap:.5rem 1rem;padding:1.25rem .2rem}
+  .vintage{grid-row:1;grid-column:1}
+  .wine-price{grid-row:1;grid-column:2}
+  .wine-region,.wine-name{grid-column:1 / -1}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}
+  .g-item{grid-column:span 1;grid-row:span 1}
+  .g-a{grid-column:span 2;grid-row:span 2}
+  .credentials{grid-template-columns:1fr}
+  .chef-strip{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .f-grid{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(2.5rem,15vw,3.6rem)}
+  .lb-btn{width:42px;height:42px}
+  .story-media .m-float{display:none}
+  .gal{grid-template-columns:1fr;grid-auto-rows:190px}
+  .g-item{grid-column:span 1;grid-row:span 1}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html.js [data-reveal]{opacity:1;transform:none}
+  .marquee-track{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<a class="skip" href="#menu">Skip to menu</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Bistro Noir, home">
+      <b>Bistro <em>Noir</em></b>
+      <i>Central · Hong Kong</i>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="navlinks" id="navlinks">
+        <li><a href="#story">The House</a></li>
+        <li><a href="#chef">The Chef</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#wine">Cellar</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reserve">Reservations</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a class="btn nav-cta" href="#reserve"><span>Book a Table</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-media">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2000&q=80&auto=format&fit=crop" alt="The dark, softly lit dining room at Bistro Noir" fetchpriority="high" decoding="async">
+  </div>
+  <div class="hero-in">
+    <p class="eyebrow">Est. 2014 · One Michelin Star</p>
+    <h1 class="serif">Bistro<em>Noir</em></h1>
+    <div class="orn" aria-hidden="true"><span></span><i>◆</i><span></span></div>
+    <p class="hero-sub">Seasonal French cooking served in candlelight — twelve tables, one chef's counter, and a cellar of four hundred labels.</p>
+    <div class="hero-actions">
+      <a class="btn btn--solid" href="#reserve"><span>Reserve a Table</span></a>
+      <a class="btn btn--ghost" href="#menu"><span>View the Menu</span></a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><b>Scroll</b><i></i></div>
+  <dl class="hero-meta">
+    <div><dt>Dinner</dt><dd>Tue – Sun · 18:00</dd></div>
+    <div><dt>Address</dt><dd>12 Aberdeen St, Central</dd></div>
+    <div><dt>Cellar</dt><dd>400 Labels</dd></div>
+    <div><dt>Seats</dt><dd>Twelve Tables</dd></div>
+  </dl>
+</section>
+
+<!-- ============ AWARDS MARQUEE ============ -->
+<div class="marquee" aria-label="Awards and recognition">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-row">
+      <b><em>★</em> One Michelin Star 2019–2026</b><s></s>
+      <b>World's 50 Best <em>#38</em></b><s></s>
+      <b>Asia's 50 Best <em>#12</em></b><s></s>
+      <b>Wine Spectator <em>Grand Award</em></b><s></s>
+      <b>Best Service <em>Hong Kong Tatler</em></b><s></s>
+      <b>Tasting Table <em>Top 20</em></b><s></s>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STORY ============ -->
+<section class="sec" id="story">
+  <div class="wrap story-grid">
+    <div class="story-copy" data-reveal>
+      <p class="eyebrow">The House</p>
+      <h2 class="serif">A room built for<br>long evenings</h2>
+      <p class="lede">Bistro Noir began in 2014 in a converted printworks off Aberdeen Street. We kept the walls dark, the lighting low and the room small on purpose — twelve tables is enough to know every guest by name, and enough for the kitchen to cook without compromise.</p>
+      <p class="lede">The menu changes with the market and the tide. Nothing arrives frozen; the turbot is line-caught, the vegetables are picked that morning in Yuen Long, and the sauces are built over three days. What reaches the table is quiet, precise, and unmistakably French.</p>
+      <p class="sig">Kenji Nakamura <span>Executive Chef &amp; Partner</span></p>
+    </div>
+    <div class="story-media" data-reveal>
+      <span class="story-badge"><b>12</b><s>Tables Only</s></span>
+      <img class="m-main" src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=900&q=78&auto=format&fit=crop" alt="The elegant dining room with set tables and tall windows" loading="lazy" decoding="async">
+      <img class="m-float" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=78&auto=format&fit=crop" alt="Guests toasting with red wine" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ============ CHEF ============ -->
+<section class="sec chef" id="chef">
+  <div class="wrap chef-grid">
+    <div class="chef-portrait" data-reveal>
+      <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=900&q=80&auto=format&fit=crop" alt="Executive Chef Kenji Nakamura in whites and a grey apron" loading="lazy" decoding="async">
+      <span class="chef-tag">Executive Chef &amp; Partner</span>
+    </div>
+    <div class="chef-copy" data-reveal>
+      <p class="eyebrow">The Chef</p>
+      <h2 class="serif">Kenji Nakamura</h2>
+      <blockquote class="chef-quote">
+        “A great plate should feel inevitable. You should not be able to imagine it any other way — and you should never see the work behind it.”
+        <footer>Kenji Nakamura</footer>
+      </blockquote>
+      <div class="chef-bio">
+        <p class="lede">Kenji trained for six years in Kyoto before moving to Lyon, where he spent a further five years in the kitchens of two Michelin-starred houses. He arrived in Hong Kong in 2011 and opened Bistro Noir three years later with a single conviction: that French technique and Japanese restraint belong on the same plate.</p>
+        <p class="lede">He still cooks service every night, and still writes the menu by hand each morning after the market — usually before the first delivery arrives.</p>
+      </div>
+      <div class="credentials">
+        <div><b>18</b><s>Years at the stove</s></div>
+        <div><b>07</b><s>Course tasting menu</s></div>
+        <div><b>400</b><s>Labels in the cellar</s></div>
+        <div><b>260k</b><s>Plates served</s></div>
+      </div>
+      <div class="chef-strip">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=78&auto=format&fit=crop" alt="A chef plating a dish during service" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=700&q=78&auto=format&fit=crop" alt="Hands preparing mushrooms on a dark prep counter" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="sec" id="menu">
+  <div class="wrap">
+    <div class="sec-head" data-reveal style="margin-inline:auto;text-align:center">
+      <p class="eyebrow center">À la Carte</p>
+      <h2 class="serif">The Menu</h2>
+      <p>Written each morning after the market. Three courses, or seven — the choice is yours.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Menu categories" data-reveal>
+      <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">Entrées</button>
+      <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">Plats Principaux</button>
+      <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">Desserts</button>
+    </div>
+
+    <!-- ENTREES -->
+    <div class="panel on" id="panel-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+      <div class="dishes">
+        <article class="dish" data-reveal>
+          <span class="dish-tag">Signature</span>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=78&auto=format&fit=crop" alt="Beef carpaccio with aged parmesan" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Carpaccio de Bœuf</h3><span class="dish-price">HK$268</span></div>
+            <p>Hand-cut wagyu, black truffle, aged parmesan, watercress oil, sourdough crisp.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=800&q=78&auto=format&fit=crop" alt="Seared seafood on toast with a dark sauce" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Toast de Langoustine</h3><span class="dish-price">HK$328</span></div>
+            <p>Scottish langoustine, brown butter, finger lime, chervil, gold leaf.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=800&q=78&auto=format&fit=crop" alt="Two bowls of pumpkin velouté with seeds" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Velouté de Potimarron</h3><span class="dish-price">HK$188</span></div>
+            <p>Roasted pumpkin, sage brown butter, toasted pepitas, crème fraîche.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&q=78&auto=format&fit=crop" alt="A refined risotto plated in a white bowl" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Risotto aux Champignons</h3><span class="dish-price">HK$238</span></div>
+            <p>Carnaroli rice, wild forest mushrooms, aged Comté, chive oil.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- MAINS -->
+    <div class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0">
+      <div class="dishes">
+        <article class="dish" data-reveal>
+          <span class="dish-tag">Chef's Choice</span>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=78&auto=format&fit=crop" alt="Pan-seared turbot with a herb salad and wine glasses" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Turbot Sauvage</h3><span class="dish-price">HK$588</span></div>
+            <p>Line-caught turbot, beurre blanc, sea herbs, Oscietra caviar.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&q=78&auto=format&fit=crop" alt="Iberico pork chop with potatoes and greens" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Côte de Porc Ibérique</h3><span class="dish-price">HK$528</span></div>
+            <p>Iberico pork chop, pommes purée, black garlic jus, charred hispi.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=78&auto=format&fit=crop" alt="Dark pappardelle pasta with mushrooms in a pan" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Pappardelle Noir</h3><span class="dish-price">HK$398</span></div>
+            <p>Squid-ink pappardelle, twelve-hour oxtail, aged pecorino, rosemary.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1517244683847-7456b63c5969?w=800&q=78&auto=format&fit=crop" alt="Slow-braised beef in a dark bowl" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Bœuf Braisé</h3><span class="dish-price">HK$568</span></div>
+            <p>Short rib braised twelve hours, bone marrow, smoked carrot, red wine reduction.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0">
+      <div class="dishes">
+        <article class="dish" data-reveal>
+          <span class="dish-tag">Signature</span>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&q=78&auto=format&fit=crop" alt="Dark chocolate fondant with caramel being poured" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Noir Fondant</h3><span class="dish-price">HK$168</span></div>
+            <p>Valrhona 70% fondant, salted caramel, cacao sorbet, cocoa nib.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=78&auto=format&fit=crop" alt="Raspberry layer cake slice with fresh raspberries" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Framboise &amp; Rose</h3><span class="dish-price">HK$148</span></div>
+            <p>Raspberry and rose layer cake, lychee, rose petal, raspberry coulis.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=78&auto=format&fit=crop" alt="Dark chocolate mousse served in a glass" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Mousse au Chocolat</h3><span class="dish-price">HK$138</span></div>
+            <p>Bittersweet chocolate mousse, mascarpone, cocoa tuile, sea salt.</p>
+          </div>
+        </article>
+        <article class="dish" data-reveal>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=78&auto=format&fit=crop" alt="A slice of tiramisu dusted with cocoa" loading="lazy" decoding="async"></div>
+          <div class="dish-body">
+            <div class="dish-top"><h3>Tiramisù</h3><span class="dish-price">HK$128</span></div>
+            <p>Espresso-soaked savoiardi, Marsala, whipped mascarpone, Valrhona cocoa.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-note" data-reveal>
+      <div>
+        <h3 class="serif">Menu Dégustation</h3>
+        <p>Seven courses, chosen by the kitchen and served to the whole table — <b>HK$1,480 per guest</b>. Add the sommelier's pairing for <b>HK$680</b>, or reserve one of the six seats at the chef's counter to watch it made (<b>HK$1,880</b>).</p>
+      </div>
+      <a class="btn" href="#reserve"><span>Reserve</span></a>
+    </div>
+    <p class="menu-foot">Please tell us of any allergies or dietary requirements when booking · Prices are subject to a 10% service charge · Menu changes with the season</p>
+  </div>
+</section>
+
+<!-- ============ WINE ============ -->
+<section class="sec wine" id="wine">
+  <div class="wine-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1800&q=70&auto=format&fit=crop" alt="" loading="lazy" decoding="async">
+  </div>
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">La Cave</p>
+      <h2 class="serif">Wine &amp; Pairing</h2>
+      <p>Four hundred labels, kept at 14°C beneath the dining room. Our sommelier opens every bottle at the table and pours by the glass for anything on the list.</p>
+    </div>
+
+    <div class="wine-grid">
+      <div class="winelist" data-reveal>
+        <div class="winerow">
+          <span class="vintage">NV</span>
+          <div>
+            <div class="wine-name">Krug Grande Cuvée, 170ème Édition</div>
+            <div class="wine-region">Champagne · France</div>
+            <p class="wine-pair">With <em>Toast de Langoustine</em> — brioche, citrus and a long saline finish.</p>
+          </div>
+          <div class="wine-price">HK$1,880<span>Bottle</span></div>
+        </div>
+        <div class="winerow">
+          <span class="vintage">2021</span>
+          <div>
+            <div class="wine-name">Chablis 1er Cru “Montée de Tonnerre”</div>
+            <div class="wine-region">Burgundy · France</div>
+            <p class="wine-pair">With <em>Turbot Sauvage</em> — flint and green apple against the beurre blanc.</p>
+          </div>
+          <div class="wine-price">HK$980<span>Bottle</span></div>
+        </div>
+        <div class="winerow">
+          <span class="vintage">2018</span>
+          <div>
+            <div class="wine-name">Barolo “Cannubi”</div>
+            <div class="wine-region">Piedmont · Italy</div>
+            <p class="wine-pair">With <em>Bœuf Braisé</em> — tar, rose and a tannin that meets the marrow.</p>
+          </div>
+          <div class="wine-price">HK$1,480<span>Bottle</span></div>
+        </div>
+        <div class="winerow">
+          <span class="vintage">2020</span>
+          <div>
+            <div class="wine-name">Crozes-Hermitage “Les Meysonniers”</div>
+            <div class="wine-region">Rhône · France</div>
+            <p class="wine-pair">With <em>Côte de Porc Ibérique</em> — black pepper, violet, smoked bacon.</p>
+          </div>
+          <div class="wine-price">HK$760<span>Bottle</span></div>
+        </div>
+        <div class="winerow">
+          <span class="vintage">2016</span>
+          <div>
+            <div class="wine-name">Château d'Yquem</div>
+            <div class="wine-region">Sauternes · France</div>
+            <p class="wine-pair">With <em>Noir Fondant</em> — apricot and honey; the caramel's natural partner.</p>
+          </div>
+          <div class="wine-price">HK$2,400<span>Half bottle</span></div>
+        </div>
+      </div>
+
+      <aside class="paircards">
+        <article class="paircard" data-reveal>
+          <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=700&q=76&auto=format&fit=crop" alt="A bottle of red wine on a dark cellar counter" loading="lazy" decoding="async">
+          <div class="paircard-body">
+            <h4>Le Grand Classique</h4>
+            <p>Five glasses drawn from the cellar, matched course by course across the tasting menu.</p>
+            <b>HK$680 per guest</b>
+          </div>
+        </article>
+        <article class="paircard" data-reveal>
+          <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=700&q=76&auto=format&fit=crop" alt="Rosé wine being poured into a glass" loading="lazy" decoding="async">
+          <div class="paircard-body">
+            <h4>Vins Vivants</h4>
+            <p>Small growers, low intervention, skin contact. Six pours for the curious — always something you have not met.</p>
+            <b>HK$580 per guest</b>
+          </div>
+        </article>
+        <article class="paircard" data-reveal>
+          <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=700&q=76&auto=format&fit=crop" alt="A dark cocktail being stirred with orange peel" loading="lazy" decoding="async">
+          <div class="paircard-body">
+            <h4>Sans Alcool</h4>
+            <p>House kombucha, clarified juices and ferments — built in the kitchen, served with equal ceremony.</p>
+            <b>HK$320 per guest</b>
+          </div>
+        </article>
+        <blockquote class="somm" data-reveal>
+          <p>“Tell me what you liked last time and I will find its cousin — older, stranger, better.”</p>
+          <cite>Marion Aubert · Head Sommelier</cite>
+        </blockquote>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <div class="sec-head" style="margin-inline:auto;text-align:center" data-reveal>
+      <p class="eyebrow center">The Room</p>
+      <h2 class="serif">Gallery</h2>
+      <p>Low light, dark walls and a kitchen you can watch. Photographs by our guests, and a few by us.</p>
+    </div>
+
+    <div class="gal" id="gal" data-reveal>
+      <button class="g-item g-a" data-full="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1800&q=80&auto=format&fit=crop" data-cap="The dining room at dusk" data-sub="Twelve tables · Aberdeen Street">
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=900&q=76&auto=format&fit=crop" alt="The dining room at dusk" loading="lazy" decoding="async">
+        <span class="g-cap">The dining room</span>
+      </button>
+      <button class="g-item g-b" data-full="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1600&q=80&auto=format&fit=crop" data-cap="Plating, mid-service" data-sub="Chef Kenji at the pass">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=76&auto=format&fit=crop" alt="A chef plating a dish mid-service" loading="lazy" decoding="async">
+        <span class="g-cap">At the pass</span>
+      </button>
+      <button class="g-item" data-full="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1600&q=80&auto=format&fit=crop" data-cap="A toast to the table" data-sub="From the cellar">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=76&auto=format&fit=crop" alt="Guests raising glasses of red wine" loading="lazy" decoding="async">
+        <span class="g-cap">A toast</span>
+      </button>
+      <button class="g-item" data-full="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=1600&q=80&auto=format&fit=crop" data-cap="Le grand plateau" data-sub="Shared, always">
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=700&q=76&auto=format&fit=crop" alt="An overhead spread of sharing plates" loading="lazy" decoding="async">
+        <span class="g-cap">Le plateau</span>
+      </button>
+      <button class="g-item g-c" data-full="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1800&q=80&auto=format&fit=crop" data-cap="Noir Fondant, caramel pour" data-sub="Desserts">
+        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&q=76&auto=format&fit=crop" alt="A dark chocolate dessert with caramel being poured over it" loading="lazy" decoding="async">
+        <span class="g-cap">Noir Fondant</span>
+      </button>
+      <button class="g-item" data-full="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1800&q=80&auto=format&fit=crop" data-cap="Saturday, twenty-forty" data-sub="Full house">
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=900&q=76&auto=format&fit=crop" alt="A full, convivial dining room at night" loading="lazy" decoding="async">
+        <span class="g-cap">Saturday, 20:40</span>
+      </button>
+      <button class="g-item" data-full="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1800&q=80&auto=format&fit=crop" data-cap="Mise en place" data-sub="Before service">
+        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=900&q=76&auto=format&fit=crop" alt="An overhead view of a laid table with several dishes" loading="lazy" decoding="async">
+        <span class="g-cap">Mise en place</span>
+      </button>
+      <button class="g-item g-d" data-full="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=1600&q=80&auto=format&fit=crop" data-cap="Salmon, courgette, dill oil" data-sub="Plats principaux">
+        <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=700&q=76&auto=format&fit=crop" alt="Seared salmon fillet with greens on a dark plate" loading="lazy" decoding="async">
+        <span class="g-cap">Salmon, dill</span>
+      </button>
+      <button class="g-item g-e" data-full="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1800&q=80&auto=format&fit=crop" data-cap="The bar, last orders" data-sub="Until midnight">
+        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=700&q=76&auto=format&fit=crop" alt="A dark bar with backlit bottles and hanging lights" loading="lazy" decoding="async">
+        <span class="g-cap">The bar</span>
+      </button>
+    </div>
+    <div class="gal-foot">
+      <p>Click any photograph to enlarge · Use ← → to browse</p>
+      <a class="btn btn--ghost" href="https://instagram.com" target="_blank" rel="noopener"><span>Follow @bistronoir</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESERVATION ============ -->
+<section class="sec reserve" id="reserve">
+  <div class="reserve-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1800&q=70&auto=format&fit=crop" alt="" loading="lazy" decoding="async">
+  </div>
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Réservations</p>
+      <h2 class="serif">Reserve a Table</h2>
+      <p>We hold twelve tables and a six-seat chef's counter. Bookings open thirty days ahead and close at 16:00 on the day. For parties of seven or more, please email us directly.</p>
+    </div>
+
+    <div class="res-grid">
+      <div class="form-card" data-reveal>
+        <form id="booking" novalidate>
+          <div class="f-row">
+            <div class="field">
+              <label for="bk-name">Full name <i>*</i></label>
+              <input type="text" id="bk-name" name="name" placeholder="Your name" autocomplete="name" required>
+              <span class="msg">Please tell us your name.</span>
+            </div>
+            <div class="field">
+              <label for="bk-email">Email <i>*</i></label>
+              <input type="email" id="bk-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+              <span class="msg">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="field">
+              <label for="bk-phone">Phone</label>
+              <input type="tel" id="bk-phone" name="phone" placeholder="+852 0000 0000" autocomplete="tel">
+              <span class="msg">Please enter a contact number.</span>
+            </div>
+            <div class="field">
+              <label for="bk-guests">Guests <i>*</i></label>
+              <select id="bk-guests" name="guests" required>
+                <option value="">Select party size</option>
+                <option value="1">1 guest</option>
+                <option value="2" selected>2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+                <option value="5">5 guests</option>
+                <option value="6">6 guests</option>
+                <option value="7">7 guests — email us</option>
+                <option value="8">8+ guests — private room</option>
+              </select>
+              <span class="msg">Please choose a party size.</span>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="field">
+              <label for="bk-date">Date <i>*</i></label>
+              <input type="date" id="bk-date" name="date" required>
+              <span class="msg">Please choose a date.</span>
+            </div>
+            <div class="field">
+              <label for="bk-time">Time <i>*</i></label>
+              <select id="bk-time" name="time" required>
+                <option value="">Select a time</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30" selected>19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+              </select>
+              <span class="msg">Please choose a time.</span>
+            </div>
+          </div>
+
+          <div class="f-row one">
+            <div class="field">
+              <label id="seat-label">Seating preference</label>
+              <div class="radios" role="radiogroup" aria-labelledby="seat-label">
+                <label class="radio"><input type="radio" name="seating" value="Dining Room" checked><span>Dining Room</span></label>
+                <label class="radio"><input type="radio" name="seating" value="Chef's Counter"><span>Chef's Counter</span></label>
+                <label class="radio"><input type="radio" name="seating" value="Terrace"><span>Terrace</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="f-row one">
+            <div class="field">
+              <label for="bk-note">Occasion &amp; special requests</label>
+              <textarea id="bk-note" name="note" placeholder="Allergies, anniversaries, a seat away from the door — anything that helps us prepare."></textarea>
+            </div>
+          </div>
+
+          <label class="check" for="bk-terms">
+            <input type="checkbox" id="bk-terms" name="terms" required>
+            <span>I understand that tables are held for fifteen minutes and that cancellations within 24 hours are charged HK$300 per guest.</span>
+          </label>
+          <div class="field" id="terms-field" style="margin-bottom:1.4rem">
+            <span class="msg" id="terms-msg">Please accept the reservation policy to continue.</span>
+          </div>
+
+          <button class="btn btn--solid" type="submit" style="width:100%;justify-content:center"><span>Confirm Reservation</span></button>
+          <p class="form-note">This is a demonstration form — no data leaves your browser. A real deployment would post to your booking system.</p>
+        </form>
+
+        <div class="booked" id="booked" role="status" aria-live="polite">
+          <div class="tick">◆</div>
+          <h3 class="serif">Your table is held</h3>
+          <p>Thank you, <span id="bk-out-name">guest</span>. A confirmation has been sent to your email. We look forward to seeing you.</p>
+          <div class="ref" id="bk-ref">BN-000000</div>
+          <div class="booked-detail">
+            <div><s>Date</s><b id="bk-out-date">—</b></div>
+            <div><s>Time</s><b id="bk-out-time">—</b></div>
+            <div><s>Guests</s><b id="bk-out-guests">—</b></div>
+            <div><s>Seating</s><b id="bk-out-seat">—</b></div>
+          </div>
+          <p class="form-note" style="text-align:center">Need to change something? Call <a href="tel:+85225441188" style="color:var(--gold)">+852 2544 1188</a>.</p>
+        </div>
+      </div>
+
+      <aside class="info-card" data-reveal>
+        <h3 class="serif">Find Us</h3>
+        <ul class="info-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.7 7-11a7 7 0 10-14 0c0 5.3 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <div><b>Address</b><p>12 Aberdeen Street, Central<br>Hong Kong <em>· MTR Sheung Wan, Exit A2</em></p></div>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div><b>Hours</b><p>Dinner · Tue – Sun, 18:00 – 23:30<br><em>Last kitchen order 22:15</em><br>Lunch · Fri – Sun, 12:00 – 14:30<br><em>Closed Mondays</em></p></div>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 005 5L15 13l5 2v4a1 1 0 01-1.1 1A16 16 0 014 5.1 1 1 0 015 4z"/></svg>
+            <div><b>Telephone</b><p><a href="tel:+85225441188">+852 2544 1188</a><br><em>From 11:00 daily</em></p></div>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg>
+            <div><b>Email</b><p><a href="mailto:reserve@bistronoir.hk">reserve@bistronoir.hk</a><br><em>Private dining &amp; events</em></p></div>
+          </li>
+        </ul>
+        <div class="info-foot">
+          <p><b>Dress code</b> · Smart elegant. No shorts or sportswear in the dining room.<br><b>Children</b> · Welcome from age ten.<br><b>Private room</b> · Seats fourteen, minimum spend applies.<br><b>Parking</b> · Valet from 18:00 at the Aberdeen Street entrance.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <b>Bistro <em>Noir</em></b>
+        <p>A one-Michelin-star dining room in Central, Hong Kong. Seasonal French cooking, twelve tables, and a cellar worth the detour.</p>
+        <div class="socials">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24"><path d="M14 8h2.5V4.8H14c-2.2 0-3.6 1.4-3.6 3.6V11H8.2v3.2h2.2V21h3.3v-6.8h2.5l.5-3.2h-3V8.7c0-.4.3-.7.8-.7z"/></svg></a>
+          <a href="https://tripadvisor.com" target="_blank" rel="noopener" aria-label="Tripadvisor"><svg width="17" height="17" viewBox="0 0 24 24"><circle cx="8" cy="12.5" r="4"/><circle cx="16" cy="12.5" r="4"/></svg></a>
+          <a href="mailto:reserve@bistronoir.hk" aria-label="Email"><svg width="17" height="17" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#story">The House</a></li>
+          <li><a href="#chef">The Chef</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#wine">Cellar</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#reserve">Reservations</a></li>
+          <li><a href="#reserve">Private dining</a></li>
+          <li><a href="#reserve">Gift vouchers</a></li>
+          <li><a href="mailto:careers@bistronoir.hk">Careers</a></li>
+          <li><a href="mailto:press@bistronoir.hk">Press</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Opening Hours</h4>
+        <div style="display:flex;flex-direction:column;gap:.7rem">
+          <div class="f-hours"><span>Tuesday – Sunday</span><b>18:00 – 23:30</b></div>
+          <div class="f-hours"><span>Friday – Sunday lunch</span><b>12:00 – 14:30</b></div>
+          <div class="f-hours"><span>Monday</span><b>Closed</b></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:1.3rem">12 Aberdeen Street, Central, Hong Kong<br><a href="tel:+85225441188" style="color:var(--gold)">+852 2544 1188</a></p>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© <span id="yr">2026</span> Bistro Noir. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+      <p>Template by <a href="https://zeusgroup.ai" target="_blank" rel="noopener">BLISS TECH · ZEUS GROUP</a></p>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Back to top">↑</button>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close viewer">✕</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photograph">‹</button>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next photograph">›</button>
+  <figure>
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-cap"><span></span></figcaption>
+  </figure>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  document.documentElement.classList.add('js');
+  var $  = function(s,c){return (c||document).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- year ---- */
+  var yr = $('#yr'); if(yr) yr.textContent = new Date().getFullYear();
+
+  /* ---- nav + progress + to-top ---- */
+  var nav = $('#nav'), bar = $('#progress'), top = $('#totop');
+  function onScroll(){
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    if(nav) nav.classList.toggle('scrolled', y > 40);
+    if(top) top.classList.toggle('on', y > 700);
+    if(bar){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  if(top) top.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
+  });
+
+  /* ---- mobile nav ---- */
+  var burger = $('#burger'), links = $('#navlinks');
+  function closeNav(){ if(links) links.classList.remove('open'); if(burger) burger.setAttribute('aria-expanded','false'); }
+  if(burger && links){
+    burger.addEventListener('click', function(){
+      var open = links.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    $$('a', links).forEach(function(a){ a.addEventListener('click', closeNav); });
+    document.addEventListener('click', function(e){
+      if(links.classList.contains('open') && !links.contains(e.target) && !burger.contains(e.target)) closeNav();
+    });
+  }
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeNav(); });
+
+  /* ---- reveal on scroll ---- */
+  var revealables = $$('[data-reveal]');
+  if(!('IntersectionObserver' in window) || REDUCED){
+    revealables.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -60px 0px'});
+    revealables.forEach(function(el, i){
+      el.style.transitionDelay = (Math.min(i % 4, 3) * 0.08) + 's';
+      io.observe(el);
+    });
+  }
+
+  /* ---- award marquee: duplicate for seamless loop ---- */
+  var mq = $('#marquee');
+  if(mq){
+    var row = $('.marquee-row', mq);
+    if(row){
+      var clone = row.cloneNode(true);
+      clone.setAttribute('aria-hidden','true');
+      mq.appendChild(clone);
+    }
+  }
+
+  /* ---- menu tabs ---- */
+  var tabs = $$('.tab');
+  function selectTab(tab){
+    tabs.forEach(function(t){
+      var on = (t === tab);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      var p = document.getElementById(t.getAttribute('aria-controls'));
+      if(p) p.classList.toggle('on', on);
+    });
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ selectTab(tab); });
+    tab.addEventListener('keydown', function(e){
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if(!d) return;
+      e.preventDefault();
+      var n = tabs[(i + d + tabs.length) % tabs.length];
+      selectTab(n); n.focus();
+    });
+  });
+
+  /* ---- gallery lightbox ---- */
+  var items = $$('.g-item');
+  var lb = $('#lb'), lbImg = $('#lb-img'), lbCap = $('#lb-cap'), lbWrap = null;
+  var idx = 0, lastFocus = null;
+
+  function render(i){
+    if(!items.length || !lbImg) return;
+    idx = (i + items.length) % items.length;
+    var el = items[idx];
+    lbImg.src = el.getAttribute('data-full');
+    lbImg.alt = el.getAttribute('data-cap') || '';
+    if(lbCap){
+      lbCap.textContent = el.getAttribute('data-cap') || '';
+      var sp = document.createElement('span');
+      sp.textContent = (el.getAttribute('data-sub') || 'Bistro Noir') + '  ·  ' + (idx + 1) + ' / ' + items.length;
+      lbCap.appendChild(sp);
+    }
+  }
+  function openLb(i, trigger){
+    if(!lb) return;
+    lastFocus = trigger || null;
+    render(i);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var c = $('#lb-close'); if(c) c.focus();
+  }
+  function closeLb(){
+    if(!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lbImg) lbImg.src = '';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  items.forEach(function(el, i){
+    el.addEventListener('click', function(){ openLb(i, el); });
+  });
+  var bc = $('#lb-close'), bp = $('#lb-prev'), bn = $('#lb-next');
+  if(bc) bc.addEventListener('click', closeLb);
+  if(bp) bp.addEventListener('click', function(e){ e.stopPropagation(); render(idx - 1); });
+  if(bn) bn.addEventListener('click', function(e){ e.stopPropagation(); render(idx + 1); });
+  if(lb) lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb || !lb.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLb();
+    else if(e.key === 'ArrowRight') render(idx + 1);
+    else if(e.key === 'ArrowLeft') render(idx - 1);
+  });
+
+  /* ---- reservation form ---- */
+  var form = $('#booking'), booked = $('#booked');
+  var dateInput = $('#bk-date');
+
+  // date floor = today, ceiling = +30 days (matches copy)
+  if(dateInput){
+    var pad = function(n){ return (n < 10 ? '0' : '') + n; };
+    var iso = function(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+    var today = new Date();
+    var max = new Date();
+    max.setDate(max.getDate() + 30);
+    dateInput.min = iso(today);
+    dateInput.max = iso(max);
+    dateInput.value = iso(today);
+  }
+
+  function setErr(field, bad){
+    if(!field) return;
+    var wrap = field.closest('.field');
+    if(wrap) wrap.classList.toggle('err', !!bad);
+  }
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim()); }
+
+  if(form){
+    $$('input,select,textarea', form).forEach(function(el){
+      el.addEventListener('input', function(){ setErr(el, false); });
+      el.addEventListener('change', function(){ setErr(el, false); });
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name  = $('#bk-name'), email = $('#bk-email'),
+          guests= $('#bk-guests'), date = $('#bk-date'),
+          time  = $('#bk-time'), terms = $('#bk-terms');
+
+      var bad = [];
+      if(!name.value.trim()){ setErr(name, true); bad.push(name); }
+      if(!validEmail(email.value)){ setErr(email, true); bad.push(email); }
+      if(!guests.value){ setErr(guests, true); bad.push(guests); }
+      if(!date.value){ setErr(date, true); bad.push(date); }
+      if(!time.value){ setErr(time, true); bad.push(time); }
+
+      var tMsg = $('#terms-msg');
+      if(terms && !terms.checked){
+        if(tMsg) tMsg.style.display = 'block';
+        if(tMsg) tMsg.style.color = '#d98a80';
+        bad.push(terms);
+      } else if(tMsg){
+        tMsg.style.display = 'none';
+      }
+
+      if(bad.length){
+        bad[0].focus();
+        return;
+      }
+
+      // build confirmation
+      var seatEl = $('input[name="seating"]:checked', form);
+      var seat = seatEl ? seatEl.value : 'Dining Room';
+      var dParts = date.value.split('-');
+      var pretty = date.value;
+      try{
+        pretty = new Date(dParts[0], dParts[1] - 1, dParts[2]).toLocaleDateString('en-GB',
+          {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+      }catch(err){}
+
+      var out = {
+        'bk-out-name':   name.value.trim().split(' ')[0],
+        'bk-out-date':   pretty,
+        'bk-out-time':   time.value,
+        'bk-out-guests': guests.options[guests.selectedIndex].text.replace(/\s*—.*$/, ''),
+        'bk-out-seat':   seat
+      };
+      Object.keys(out).forEach(function(id){
+        var el = document.getElementById(id);
+        if(el) el.textContent = out[id];
+      });
+
+      // reference: BN-YYMMDD-####
+      var ref = $('#bk-ref');
+      if(ref){
+        var g = guests.value || '2';
+        var digits = String(Math.floor(1000 + Math.random() * 9000));
+        var day = (dParts[1] || '01') + (dParts[2] || '01');
+        ref.textContent = 'BN-' + day + '-' + (g.length < 2 ? '0' + g : g) + digits.slice(0, 3);
+      }
+
+      form.style.display = 'none';
+      if(booked){ booked.classList.add('on'); booked.scrollIntoView({block:'center', behavior: REDUCED ? 'auto' : 'smooth'}); }
+    });
+  }
+
+  /* ---- smooth in-page anchors (nav offset safety net) ---- */
+  $$('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id === '#' || id.length < 2) return;
+      var target = document.querySelector(id);
+      if(!target) return;
+      e.preventDefault();
+      var y = target.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight - 1 : 0);
+      window.scrollTo({top:y, behavior: REDUCED ? 'auto' : 'smooth'});
+      history.replaceState(null, '', id);
+    });
+  });
+})();
+</script>
+</body>
+</html>
